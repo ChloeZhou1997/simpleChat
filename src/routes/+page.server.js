@@ -30,7 +30,7 @@ export const actions = {
 		const data = Object.fromEntries(await request.formData());
 		const content = data.body
 
-
+		if (content.toString() === "" || !/\S/.test(content.toString())){
 			message.push({role:"user",content:content.toString()})
 
 			const completion = await openai.createChatCompletion(
@@ -39,5 +39,6 @@ export const actions = {
 			)
 
 			message.push(completion.data.choices[0].message)
+		}
 	}
 }
