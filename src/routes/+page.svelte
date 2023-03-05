@@ -142,7 +142,8 @@
   }
   .chatBox {
     padding: 1em;
-    background-color: lightgrey;
+    background-color: #939597;
+    border-radius: 20px;
   }
 
   .msg {
@@ -150,17 +151,16 @@
     font-family: Helvetica, sans-serif;
     padding: 1em;
     margin: 1em;
-    width: 50%;
-    border-radius: 8px;
-    position: relative;
+    border-radius: 20px;
+    max-width: fit-content;
   }
 
   .chatBubbleAssistant {
-    background-color: lightgrey;
+    background-color: #939597;
   }
 
   .chatBubbleUser {
-    background-color: lightblue;
+    background-color: #f5df4d;
     text-align: right;
     margin-left: auto;
   }
@@ -171,9 +171,9 @@
   }
 
   button {
-    background-color: #3cbc8d;
-    color: white;
-    border-radius: 3px;
+    background-color: #f1e595;
+    color: #18191a;
+    border-radius: 5px;
     width: 80px;
     padding: 10px 10px;
     margin-left: auto;

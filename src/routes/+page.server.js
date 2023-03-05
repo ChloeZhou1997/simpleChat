@@ -1,19 +1,19 @@
 // since there's no dynamic data here, we can prerender
 // it so that it gets served as a static asset in production
 import { Configuration, OpenAIApi } from "openai";
-// import { SECRETE_API_KEY } from "$env/static/private";
+import { SECRETE_API_KEY } from "$env/static/private";
 
 
 let message = [
 	{
 		role:"assistant",
-		content: "I am a helpful assistant powered by GPT"
+		content: "Hi. I am a chatbot powered by openAI GPT, how can I help you :)"
 	}
 ];
 
 const configuration = new Configuration({
 	organization: "org-0NKblXKpoZsQ5ZRbpOPQR4ne",
-  apiKey: process.env.SECRETE_API_KEY,
+  apiKey: SECRETE_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -31,6 +31,8 @@ export const actions = {
 		const content = data.body
 
 		if (content.toString() === "" || !/\S/.test(content.toString())){
+			return;
+		}
 			message.push({role:"user",content:content.toString()})
 
 			const completion = await openai.createChatCompletion(
@@ -39,6 +41,5 @@ export const actions = {
 			)
 
 			message.push(completion.data.choices[0].message)
-		}
 	}
 }
