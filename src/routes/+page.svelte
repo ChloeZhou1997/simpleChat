@@ -76,12 +76,10 @@
     {#each data.message as post}
       {#if post.role == "assistant"}
         <div class="msg chatBubbleAssistant">
-          <div class="right-point" />
           <p>{post.content}</p>
         </div>
       {:else}
         <div class="msg chatBubbleUser">
-          <div class="left-point" />
           <p>{post.content}</p>
         </div>
       {/if}
@@ -158,37 +156,13 @@
   }
 
   .chatBubbleAssistant {
-    background-color: lightblue;
-  }
-
-  .right-point {
-    width: 10px;
-    height: 10px;
-    border-left: 10px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 50px solid lightblue;
-    position: absolute;
-    top: 1%;
-    right: -5%;
-    transform: rotate(-80deg);
+    background-color: lightgrey;
   }
 
   .chatBubbleUser {
-    background-color: lightgoldenrodyellow;
+    background-color: lightblue;
     text-align: right;
     margin-left: auto;
-  }
-
-  .left-point {
-    width: 10px;
-    height: 10px;
-    border-left: 10px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 50px solid lightgoldenrodyellow;
-    position: absolute;
-    top: 1%;
-    left: -5%;
-    transform: rotate(80deg);
   }
 
   .formFooter {
