@@ -34,14 +34,16 @@
 
 <section>
   <div class="messageBox">
-    <h1>Powered by GPT</h1>
+    <h1>simplyChat</h1>
     {#each data.message as post}
       {#if post.role == "assistant"}
         <div class="msg chatBubbleAssistant">
+          <div class="right-point" />
           <p>{post.content}</p>
         </div>
       {:else}
         <div class="msg chatBubbleUser">
+          <div class="left-point" />
           <p>{post.content}</p>
         </div>
       {/if}
@@ -105,20 +107,43 @@
     font-family: Helvetica, sans-serif;
     padding: 1em;
     margin: 1em;
-    width: fit-content;
+    width: 50%;
     border-radius: 8px;
+    position: relative;
   }
 
   .chatBubbleAssistant {
-    border: 2px solid grey;
     background-color: lightblue;
   }
 
+  .right-point {
+    width: 10px;
+    height: 10px;
+    border-left: 10px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 50px solid lightblue;
+    position: absolute;
+    top: 1%;
+    right: -5%;
+    transform: rotate(-80deg);
+  }
+
   .chatBubbleUser {
-    border: 2px solid yellow;
     background-color: lightgoldenrodyellow;
     text-align: right;
     margin-left: auto;
+  }
+
+  .left-point {
+    width: 10px;
+    height: 10px;
+    border-left: 10px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 50px solid lightgoldenrodyellow;
+    position: absolute;
+    top: 1%;
+    left: -5%;
+    transform: rotate(80deg);
   }
 
   .formFooter {

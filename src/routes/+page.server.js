@@ -1,7 +1,7 @@
 // since there's no dynamic data here, we can prerender
 // it so that it gets served as a static asset in production
 import { Configuration, OpenAIApi } from "openai";
-// import { SECRETE_API_KEY } from "$env/static/private";
+import { SECRETE_API_KEY } from "$env/static/private";
 
 
 let message = [
@@ -13,7 +13,7 @@ let message = [
 
 const configuration = new Configuration({
 	organization: "org-0NKblXKpoZsQ5ZRbpOPQR4ne",
-  apiKey: process.env.SECRETE_API_KEY,
+  apiKey: SECRETE_API_KEY,
 });
 
 const openai = new OpenAIApi(configuration);
@@ -38,5 +38,4 @@ export const actions = {
 
 		message.push(completion.data.choices[0].message)
 	}
-
 }
