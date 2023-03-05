@@ -1,8 +1,8 @@
 # Immediate Improvement
 - [ ] add a button to clear the chat history
-- [ ] fix the button for phone screen
-- [ ] prevent empty entry
-
+- [X] fix the button for phone screen (03/05/2023)
+- [X] prevent empty entry (03/05/2023)
+- [X] prevent multiple forms submissions (03/05/2023)
 # Long-term plan
 - [ ] add prompt to do more flexible function
 - [ ] add authentication methods to improve security of the site
