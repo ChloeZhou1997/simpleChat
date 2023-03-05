@@ -32,20 +32,21 @@
   <meta name="description" content="Svelte demo app" />
 </svelte:head>
 
-<h1>Powered by GPT</h1>
-
 <section>
-  {#each data.message as post}
-    {#if post.role == "assistant"}
-      <div class="chatBubbleAssistant">
-        <p>{post.content}</p>
-      </div>
-    {:else}
-      <div class="chatBubbleUser">
-        <p>{post.content}</p>
-      </div>
-    {/if}
-  {/each}
+  <div class="messageBox">
+    <h1>Powered by GPT</h1>
+    {#each data.message as post}
+      {#if post.role == "assistant"}
+        <div class="msg chatBubbleAssistant">
+          <p>{post.content}</p>
+        </div>
+      {:else}
+        <div class="msg chatBubbleUser">
+          <p>{post.content}</p>
+        </div>
+      {/if}
+    {/each}
+  </div>
   <div class="chatBox">
     <form
       method="POST"
@@ -62,30 +63,30 @@
         on:keydown={keyHandler}
         bind:this={inputArea}
       />
-      <button>submit</button>
+      <div class="formFooter">
+        <button>submit</button>
+      </div>
     </form>
   </div>
 </section>
 
 <style>
   h1 {
-    padding: 1em 1em;
+    padding: 1em;
     font-size: 2em;
     text-align: center;
   }
   form {
     background-color: lightgrey;
-    padding: 1em 1em;
+    padding: 1em;
   }
 
   section {
     width: 70%;
-    margin: auto;
-  }
-
-  label {
-    width: 80%;
-    height: 150px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-rows: 1fr min-content;
+    height: 100vh;
   }
 
   input {
@@ -96,24 +97,33 @@
     border: 2px solid #ccc;
   }
   .chatBox {
-    text-align: center;
-    padding: 2em;
+    padding: 1em 1em 0 1em;
+  }
+
+  .msg {
+    font-size: 18px;
+    font-family: Helvetica, sans-serif;
+    padding: 1em;
+    margin: 1em;
+    width: fit-content;
+    border-radius: 8px;
   }
 
   .chatBubbleAssistant {
-    padding: 2em;
-    margin: 2em 2em;
     border: 2px solid grey;
     background-color: lightblue;
-    text-align: left;
   }
 
   .chatBubbleUser {
-    padding: 2em;
-    margin: 2em 2em;
     border: 2px solid yellow;
     background-color: lightgoldenrodyellow;
     text-align: right;
+    margin-left: auto;
+  }
+
+  .formFooter {
+    display: flex;
+    margin-left: auto;
   }
 
   button {
@@ -122,6 +132,7 @@
     border-radius: 3px;
     width: 10%;
     padding: 10px 10px;
+    margin-left: auto;
   }
 
   .textArea {
