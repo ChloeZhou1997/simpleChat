@@ -121,7 +121,7 @@
   }
 
   section {
-    width: 70%;
+    max-width: 900px;
     margin: 0 auto;
     display: grid;
     grid-template-rows: 1fr min-content;
@@ -142,8 +142,13 @@
   }
   .chatBox {
     padding: 1em;
-    background-color: #939597;
-    border-radius: 20px;
+    background-color: #b2b3b4;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  .messageBox {
+    overflow-y: auto;
   }
 
   .msg {
@@ -156,7 +161,7 @@
   }
 
   .chatBubbleAssistant {
-    background-color: #939597;
+    background-color: #d4d5d7;
   }
 
   .chatBubbleUser {
@@ -171,7 +176,7 @@
   }
 
   button {
-    background-color: #f1e595;
+    background-color: #f5df4d;
     color: #18191a;
     border-radius: 5px;
     width: 80px;
@@ -188,6 +193,7 @@
     padding: 0.5rem;
     resize: none;
     width: 100%;
+    border-radius: 15px;
   }
 
   .Loading {
