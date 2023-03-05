@@ -78,10 +78,6 @@
     font-size: 2em;
     text-align: center;
   }
-  form {
-    background-color: lightgrey;
-    padding: 1em;
-  }
 
   section {
     width: 70%;
@@ -98,8 +94,14 @@
     background-color: #f8f8f8;
     border: 2px solid #ccc;
   }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
   .chatBox {
-    padding: 1em 1em 0 1em;
+    padding: 1em;
+    background-color: lightgrey;
   }
 
   .msg {
@@ -155,7 +157,7 @@
     background-color: #3cbc8d;
     color: white;
     border-radius: 3px;
-    width: 10%;
+    width: 80px;
     padding: 10px 10px;
     margin-left: auto;
   }
