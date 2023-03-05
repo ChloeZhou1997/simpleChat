@@ -2,12 +2,14 @@
   // @ts-nocheck
   import { enhance } from "$app/forms";
   import { onMount } from "svelte";
-  import { Button, Col, Row } from "sveltestrap";
+  import { invalidateAll, goto } from "$app/navigation";
+  import { applyAction, deserialize } from "$app/forms";
   /** @type {import('./$types').PageData} */
   export let data;
 
   let inputArea;
   let form;
+  let flag = false;
 
   onMount(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -18,12 +20,48 @@
     window.scrollTo(0, document.body.scrollHeight);
   }
 
-  function keyHandler(event) {
+  async function keyHandler(event) {
     switch (event.key) {
       case "Enter":
         event.preventDefault();
-        form.submit();
+        form.requestSubmit();
     }
+  }
+
+  async function handleSubmit(event) {
+    if (!isMessageValid() || flag) {
+      return;
+    }
+
+    flag = true;
+    const data = new FormData(this);
+    const response = await fetch(this.action, {
+      method: "POST",
+      body: data,
+    });
+
+    /** @type {import('@sveltejs/kit').ActionResult} */
+    const result = deserialize(await response.text());
+
+    if (result.type === "success") {
+      // re-run all `load` functions, following the successful update
+      await invalidateAll();
+    }
+
+    applyAction(result);
+
+    inputArea.value = "";
+    inputArea.focus();
+    flag = false;
+  }
+
+  function isMessageValid() {
+    if (inputArea.value === "") {
+      return false;
+    } else if (!/\S/.test(inputArea.value)) {
+      return false;
+    }
+    return true;
   }
 </script>
 
@@ -52,10 +90,10 @@
   <div class="chatBox">
     <form
       method="POST"
-      action="?/createPost"
       id="chatMessage"
       bind:this={form}
-      use:enhance
+      on:submit|preventDefault={handleSubmit}
+      action="?/createPost"
     >
       <!-- <input name="body" type="text" /> -->
       <textarea
@@ -66,7 +104,11 @@
         bind:this={inputArea}
       />
       <div class="formFooter">
-        <button>submit</button>
+        {#if !flag}
+          <button>submit</button>
+        {:else}
+          <div class="Loading"><p>loading...</p></div>
+        {/if}
       </div>
     </form>
   </div>
@@ -77,6 +119,7 @@
     padding: 1em;
     font-size: 2em;
     text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 
   section {
@@ -171,5 +214,10 @@
     padding: 0.5rem;
     resize: none;
     width: 100%;
+  }
+
+  .Loading {
+    margin-left: auto;
+    text-align: right;
   }
 </style>
