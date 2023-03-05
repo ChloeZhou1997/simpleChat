@@ -29,13 +29,16 @@ export const actions = {
 	createPost: async ({request}) => {
 		const data = Object.fromEntries(await request.formData());
 		const content = data.body
-		message.push({role:"user",content:content.toString()})
 
-		const completion = await openai.createChatCompletion(
-			{model :  "gpt-3.5-turbo",
-			messages : message}
-		)
+		if(/[a-zA-Z0-9]+/.test(content.toString())) {
+			message.push({role:"user",content:content.toString()})
 
-		message.push(completion.data.choices[0].message)
+			const completion = await openai.createChatCompletion(
+				{model :  "gpt-3.5-turbo",
+				messages : message}
+			)
+
+			message.push(completion.data.choices[0].message)
+		}
 	}
 }
