@@ -1,59 +1,137 @@
 <script>
-	import Counter from './Counter.svelte';
-	import welcome from '$lib/images/svelte-welcome.webp';
-	import welcome_fallback from '$lib/images/svelte-welcome.png';
+  // @ts-nocheck
+  import { enhance } from "$app/forms";
+  import { onMount } from "svelte";
+  import { Button, Col, Row } from "sveltestrap";
+  /** @type {import('./$types').PageData} */
+  export let data;
+
+  let inputArea;
+  let form;
+
+  onMount(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  });
+
+  $: if (inputArea) {
+    inputArea.focus();
+    window.scrollTo(0, document.body.scrollHeight);
+  }
+
+  function keyHandler(event) {
+    switch (event.key) {
+      case "Enter":
+        event.preventDefault();
+        form.submit();
+    }
+  }
 </script>
 
 <svelte:head>
-	<title>Home</title>
-	<meta name="description" content="Svelte demo app" />
+  <title>Chatbot</title>
+  <meta name="description" content="Svelte demo app" />
 </svelte:head>
 
+<h1>Powered by GPT</h1>
+
 <section>
-	<h1>
-		<span class="welcome">
-			<picture>
-				<source srcset={welcome} type="image/webp" />
-				<img src={welcome_fallback} alt="Welcome" />
-			</picture>
-		</span>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/+page.svelte</strong>
-	</h2>
-
-	<Counter />
+  {#each data.message as post}
+    {#if post.role == "assistant"}
+      <div class="chatBubbleAssistant">
+        <p>{post.content}</p>
+      </div>
+    {:else}
+      <div class="chatBubbleUser">
+        <p>{post.content}</p>
+      </div>
+    {/if}
+  {/each}
+  <div class="chatBox">
+    <form
+      method="POST"
+      action="?/createPost"
+      id="chatMessage"
+      bind:this={form}
+      use:enhance
+    >
+      <!-- <input name="body" type="text" /> -->
+      <textarea
+        name="body"
+        form="chatMessage"
+        class="textArea"
+        on:keydown={keyHandler}
+        bind:this={inputArea}
+      />
+      <button>submit</button>
+    </form>
+  </div>
 </section>
 
 <style>
-	section {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		flex: 0.6;
-	}
+  h1 {
+    padding: 1em 1em;
+    font-size: 2em;
+    text-align: center;
+  }
+  form {
+    background-color: lightgrey;
+    padding: 1em 1em;
+  }
 
-	h1 {
-		width: 100%;
-	}
+  section {
+    width: 70%;
+    margin: auto;
+  }
 
-	.welcome {
-		display: block;
-		position: relative;
-		width: 100%;
-		height: 0;
-		padding: 0 0 calc(100% * 495 / 2048) 0;
-	}
+  label {
+    width: 80%;
+    height: 150px;
+  }
 
-	.welcome img {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		top: 0;
-		display: block;
-	}
+  input {
+    height: 150px;
+    width: 700px;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    border: 2px solid #ccc;
+  }
+  .chatBox {
+    text-align: center;
+    padding: 2em;
+  }
+
+  .chatBubbleAssistant {
+    padding: 2em;
+    margin: 2em 2em;
+    border: 2px solid grey;
+    background-color: lightblue;
+    text-align: left;
+  }
+
+  .chatBubbleUser {
+    padding: 2em;
+    margin: 2em 2em;
+    border: 2px solid yellow;
+    background-color: lightgoldenrodyellow;
+    text-align: right;
+  }
+
+  button {
+    background-color: #3cbc8d;
+    color: white;
+    border-radius: 3px;
+    width: 10%;
+    padding: 10px 10px;
+  }
+
+  .textArea {
+    font-size: 1rem;
+    line-height: 2rem;
+    min-height: 9.2rem;
+    background-color: white;
+    text-align: left;
+    padding: 0.5rem;
+    resize: none;
+    width: 100%;
+  }
 </style>
