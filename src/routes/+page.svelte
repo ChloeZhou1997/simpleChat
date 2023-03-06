@@ -1,7 +1,7 @@
 <script>
   // @ts-nocheck
   import { enhance } from "$app/forms";
-  import { onMount } from "svelte";
+  import { onMount, onDestroy } from "svelte";
   import { invalidateAll, goto } from "$app/navigation";
   import { applyAction, deserialize } from "$app/forms";
   /** @type {import('./$types').PageData} */
@@ -10,9 +10,14 @@
   let inputArea;
   let form;
   let flag = false;
+  let clearHistoryForm;
 
   onMount(() => {
     window.scrollTo(0, document.body.scrollHeight);
+
+    window.addEventListener("beforeunload", function (e) {
+      clearHistoryForm.requestSubmit();
+    });
   });
 
   $: if (inputArea) {
@@ -70,6 +75,24 @@
       method: "POST",
     });
   }
+
+  async function resetList(event) {
+    const data = new FormData(this);
+    const response = await fetch(this.action, {
+      method: "POST",
+      body: data,
+    });
+
+    /** @type {import('@sveltejs/kit').ActionResult} */
+    const result = deserialize(await response.text());
+
+    if (result.type === "success") {
+      // re-run all `load` functions, following the successful update
+      await invalidateAll();
+    }
+
+    applyAction(result);
+  }
 </script>
 
 <svelte:head>
@@ -102,6 +125,7 @@
     >
       <!-- <input name="body" type="text" /> -->
       <textarea
+        placeholder="start your chat here..."
         name="body"
         form="chatMessage"
         class="textArea"
@@ -110,7 +134,13 @@
       />
     </form>
     <div class="formFooter">
-      <form method="POST" action="?/resetList" id="clearHistory">
+      <form
+        method="POST"
+        on:submit|preventDefault={resetList}
+        action="?/resetList"
+        id="clearHistory"
+        bind:this={clearHistoryForm}
+      >
         <button class="clearHistory">clear history</button>
       </form>
       {#if !flag}
@@ -136,14 +166,6 @@
     display: grid;
     grid-template-rows: 1fr min-content;
     height: 100vh;
-  }
-
-  input {
-    height: 150px;
-    width: 700px;
-    border-radius: 4px;
-    background-color: #f8f8f8;
-    border: 2px solid #ccc;
   }
 
   p {

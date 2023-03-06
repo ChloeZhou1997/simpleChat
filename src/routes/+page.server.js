@@ -16,7 +16,6 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-
 /** @type {import('./$types').PageServerLoad} */
 export function load({ params }) {
   return {message};
@@ -40,7 +39,9 @@ export const actions = {
 
 			message.push(completion.data.choices[0].message)
 	},
+
 	resetList: async ({request}) => {
+		console.log("triggered");
 		message = [
 			{
 				role:"assistant",
