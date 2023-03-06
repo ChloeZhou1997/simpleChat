@@ -63,6 +63,13 @@
     }
     return true;
   }
+
+  async function deleteList(event) {
+    console.log("click");
+    const response = await fetch(resetList, {
+      method: "POST",
+    });
+  }
 </script>
 
 <svelte:head>
@@ -101,14 +108,17 @@
         on:keydown={keyHandler}
         bind:this={inputArea}
       />
-      <div class="formFooter">
-        {#if !flag}
-          <button>submit</button>
-        {:else}
-          <div class="Loading"><p>loading...</p></div>
-        {/if}
-      </div>
     </form>
+    <div class="formFooter">
+      <form method="POST" action="?/resetList" id="clearHistory">
+        <button class="clearHistory">clear history</button>
+      </form>
+      {#if !flag}
+        <button type="submit" form="chatMessage">submit</button>
+      {:else}
+        <div class="Loading"><p>loading...</p></div>
+      {/if}
+    </div>
   </div>
 </section>
 
@@ -172,16 +182,21 @@
 
   .formFooter {
     display: flex;
-    margin-left: auto;
+    justify-content: flex-end;
   }
 
   button {
-    background-color: #f5df4d;
-    color: #18191a;
+    background-color: #f5df4ddd;
+    border: 1px solid rgba(255, 255, 255, 0.407);
+    margin-left: 4px;
     border-radius: 5px;
     width: 80px;
     padding: 10px 10px;
-    margin-left: auto;
+  }
+
+  .clearHistory {
+    width: 120px;
+    background-color: rgba(255, 255, 251, 0.454);
   }
 
   .textArea {
@@ -197,7 +212,9 @@
   }
 
   .Loading {
-    margin-left: auto;
     text-align: right;
+    width: 80px;
+    padding: 10px 10px;
+    margin-left: 4px;
   }
 </style>

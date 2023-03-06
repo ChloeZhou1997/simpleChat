@@ -1,5 +1,3 @@
-// since there's no dynamic data here, we can prerender
-// it so that it gets served as a static asset in production
 import { Configuration, OpenAIApi } from "openai";
 import { SECRETE_API_KEY } from "$env/static/private";
 
@@ -41,5 +39,12 @@ export const actions = {
 			)
 
 			message.push(completion.data.choices[0].message)
+	},
+	resetList: async ({request}) => {
+		message = [
+			{
+				role:"assistant",
+				content: "Hi. I am a chatbot powered by openAI GPT, how can I help you :)"
+			}];
 	}
 }
