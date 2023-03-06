@@ -41,7 +41,6 @@ export const actions = {
 	},
 
 	resetList: async ({request}) => {
-		console.log("triggered");
 		message = [
 			{
 				role:"assistant",
