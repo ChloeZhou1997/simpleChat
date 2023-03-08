@@ -62,6 +62,13 @@ export const actions = {
 
 		console.log("message is", message);
 
+		message = [
+			{
+				role:"assistant",
+				content: "Hi. I am a chatbot powered by openAI GPT, how can I help you :)"
+			}
+		];
+
 		const newUser = await db.user.create(
 					{
 						data:{
