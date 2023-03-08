@@ -1,23 +1,25 @@
 <script>
   // @ts-nocheck
-  import { enhance } from "$app/forms";
-  import { onMount, onDestroy } from "svelte";
+  import { onMount } from "svelte";
   import { invalidateAll, goto } from "$app/navigation";
   import { applyAction, deserialize } from "$app/forms";
+  import { enhance } from "$app/forms";
+
   /** @type {import('./$types').PageData} */
   export let data;
+  export let form;
 
   let inputArea;
-  let form;
+  let messageForm;
   let flag = false;
   let clearHistoryForm;
 
   onMount(() => {
     window.scrollTo(0, document.body.scrollHeight);
 
-    window.addEventListener("beforeunload", function (e) {
-      clearHistoryForm.requestSubmit();
-    });
+    // window.addEventListener("beforeunload", function (e) {
+    //   clearHistoryForm.requestSubmit();
+    // });
   });
 
   $: if (inputArea) {
@@ -29,7 +31,7 @@
     switch (event.key) {
       case "Enter":
         event.preventDefault();
-        form.requestSubmit();
+        messageForm.requestSubmit();
     }
   }
 
@@ -97,60 +99,98 @@
 
 <svelte:head>
   <title>Chatbot</title>
-  <meta name="description" content="Svelte demo app" />
+  <meta name="description" content="Chatbot powered by GPT" />
 </svelte:head>
 
-<section>
-  <div class="messageBox">
-    <h1>simplyChat</h1>
-    {#each data.message as post}
-      {#if post.role == "assistant"}
-        <div class="msg chatBubbleAssistant">
-          <p>{post.content}</p>
-        </div>
-      {:else}
-        <div class="msg chatBubbleUser">
-          <p>{post.content}</p>
-        </div>
-      {/if}
-    {/each}
-  </div>
-  <div class="chatBox">
+{#if !data.user}
+  <div class="fixMiddle">
     <form
+      class="loginForm"
       method="POST"
-      id="chatMessage"
-      bind:this={form}
-      on:submit|preventDefault={handleSubmit}
-      action="?/createPost"
+      action="?/login"
+      id="loginform"
+      use:enhance
     >
-      <!-- <input name="body" type="text" /> -->
-      <textarea
-        placeholder="start your chat here..."
-        name="body"
-        form="chatMessage"
-        class="textArea"
-        on:keydown={keyHandler}
-        bind:this={inputArea}
-      />
+      <div class="con">
+        <input
+          class="form-input"
+          name="username"
+          type="text"
+          placeholder="Username"
+        />
+        <input
+          class="form-input"
+          name="password"
+          type="password"
+          placeholder="Password"
+        />
+      </div>
+      <div class="con">
+        <button class="logbutton">Log in</button>
+        <button class="logbutton register" formaction="?/register"
+          >Register</button
+        >
+      </div>
     </form>
-    <div class="formFooter">
+  </div>
+{/if}
+
+{#if data.user}
+  <section>
+    <div class="messageBox">
+      <h1>simplyChat</h1>
+      {#each data.message as post}
+        {#if post.role == "assistant"}
+          <div class="msg chatBubbleAssistant">
+            <p>{post.content}</p>
+          </div>
+        {:else}
+          <div class="msg chatBubbleUser">
+            <p>{post.content}</p>
+          </div>
+        {/if}
+      {/each}
+    </div>
+    <div class="chatBox">
       <form
         method="POST"
-        on:submit|preventDefault={resetList}
-        action="?/resetList"
-        id="clearHistory"
-        bind:this={clearHistoryForm}
+        id="chatMessage"
+        bind:this={messageForm}
+        on:submit|preventDefault={handleSubmit}
+        action="?/createPost"
       >
-        <button class="clearHistory">clear history</button>
+        <!-- <input name="body" type="text" /> -->
+        <textarea
+          placeholder="start your chat here..."
+          name="body"
+          form="chatMessage"
+          class="textArea"
+          on:keydown={keyHandler}
+          bind:this={inputArea}
+        />
       </form>
-      {#if !flag}
-        <button type="submit" form="chatMessage">submit</button>
-      {:else}
-        <div class="Loading"><p>loading...</p></div>
-      {/if}
+      <div class="formFooter">
+        <form method="POST" action="?/logout" use:enhance>
+          <button>Logout</button>
+        </form>
+        <form
+          method="POST"
+          on:submit|preventDefault={resetList}
+          action="?/resetList"
+          id="clearHistory"
+          bind:this={clearHistoryForm}
+        >
+          <button class="clearHistory">clear history</button>
+        </form>
+        {#if !flag}
+          <button type="submit" form="chatMessage">submit</button>
+        {:else}
+          <div class="Loading"><p>loading...</p></div>
+        {/if}
+      </div>
     </div>
-  </div>
-</section>
+  </section>
+{/if}
 
 <style>
   h1 {
@@ -171,6 +211,82 @@
   p {
     margin: 0;
     padding: 0;
+  }
+
+  .fixMiddle {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .loginForm {
+    max-width: 450px;
+    border-radius: 5px;
+    background-image: linear-gradient(-225deg, #fcdf87 50%, #bbbbbbaa 50%);
+    box-shadow: 0 9px 50px hsla(20, 67%, 75%, 0.31);
+    padding: 2%;
+    height: auto;
+  }
+
+  .con {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .logbutton {
+    display: inline-block;
+    color: #252537;
+
+    width: 150px;
+    height: 50px;
+
+    background: #fff;
+    border-radius: 5px;
+
+    outline: none;
+    border: none;
+
+    cursor: pointer;
+    text-align: center;
+    margin: 2px;
+    transition: all 0.2s linear;
+
+    letter-spacing: 0.1em;
+  }
+
+  /* buttons hover */
+  button:hover {
+    transform: translatey(3px);
+    box-shadow: none;
+  }
+
+  /* buttons hover Animation */
+  button:hover {
+    animation: ani9 0.4s ease-in-out infinite alternate;
+  }
+
+  .register {
+    background: #fcdf87;
+  }
+
+  .form-input {
+    width: 240px;
+    height: 50px;
+
+    margin-top: 2%;
+    padding: 15px;
+
+    font-size: 16px;
+    outline: none;
+    border: none;
+
+    border-radius: 0px 5px 5px 0px;
+    transition: 0.2s linear;
   }
   .chatBox {
     padding: 1em;

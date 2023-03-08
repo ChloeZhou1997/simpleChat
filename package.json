@@ -16,6 +16,7 @@
 		"@sveltejs/kit": "^1.5.0",
 		"@types/cookie": "^0.5.1",
 		"dotenv": "^16.0.3",
+		"prisma": "^4.11.0",
 		"rollup-plugin-copy": "^3.4.0",
 		"svelte": "^3.55.1",
 		"svelte-check": "^3.0.1",
@@ -24,6 +25,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@prisma/client": "^4.11.0",
+		"bcrypt": "^5.1.0",
 		"openai": "^3.2.1"
 	},
 	"engines": {
