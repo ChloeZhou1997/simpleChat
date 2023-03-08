@@ -6,5 +6,5 @@
 - [X] prevent multiple forms submissions (03/05/2023)
 # Long-term plan
 - [ ] add prompt to do more flexible function
-- [ ] add authentication methods to improve security of the site
+- [X] add authentication methods to improve security of the site
 
