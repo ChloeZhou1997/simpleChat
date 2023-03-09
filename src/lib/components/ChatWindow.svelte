@@ -1,0 +1,51 @@
+<script>
+    // @ts-nocheck
+
+    import { afterUpdate } from "svelte";
+
+    export let messages;
+    let messageBox;
+
+    afterUpdate(() => {
+        messageBox.scrollTo(0, messageBox.scrollHeight);
+    });
+</script>
+
+<div class="messageBox" bind:this={messageBox}>
+    {#each messages as post}
+        {#if post.role == "assistant"}
+            <div class="msg chatBubbleAssistant">
+                <p>{post.content}</p>
+            </div>
+        {:else}
+            <div class="msg chatBubbleUser">
+                <p>{post.content}</p>
+            </div>
+        {/if}
+    {/each}
+</div>
+
+<style>
+    .messageBox {
+        overflow-y: auto;
+    }
+
+    .msg {
+        font-size: 18px;
+        font-family: Helvetica, sans-serif;
+        padding: 1em;
+        margin: 1em;
+        border-radius: 20px;
+        max-width: fit-content;
+    }
+
+    .chatBubbleAssistant {
+        background-color: #d4d5d7;
+    }
+
+    .chatBubbleUser {
+        background-color: #f5df4d;
+        text-align: right;
+        margin-left: auto;
+    }
+</style>

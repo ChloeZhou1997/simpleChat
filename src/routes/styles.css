@@ -7,3 +7,18 @@ body, html{
 	height: 100%;
 	margin: 0;
 }
+
+button {
+	background-color: #f5df4ddd;
+	border: 1px solid rgba(255, 255, 255, 0.407);
+	margin-left: 4px;
+	border-radius: 5px;
+	width: 80px;
+	padding: 10px 10px;
+}
+
+button:hover {
+    transform: translatey(3px);
+    box-shadow: none;
+	animation: ani9 0.4s ease-in-out infinite alternate;
+  }

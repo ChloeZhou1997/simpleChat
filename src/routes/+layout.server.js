@@ -1,3 +1,4 @@
+// @ts-nocheck
 export const load = async ( {locals} ) => {
 
 	if (!locals.user) {

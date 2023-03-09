@@ -1,11 +1,8 @@
+// @ts-nocheck
 import { Configuration, OpenAIApi } from "openai";
 import { SECRETE_API_KEY } from "$env/static/private";
-import {PrismaClient, Prisma} from '@prisma/client';
 import bcrypt from 'bcrypt';
 import { db } from '$lib/database';
-import { redirect } from "@sveltejs/kit";
-
-// const db = new PrismaClient();
 
 let message = [
 	{
@@ -31,11 +28,6 @@ export function load( {locals} ) {
 		userName = locals.user.name;
 		message = locals.user.message;
 		}
-
-	console.log("=================")
-
-	console.log("from page.server.js: called load from the backend, status user name is",userName)
-
 
   return {message,userName};
 }
