@@ -9,6 +9,7 @@
     /** @type {import('./$types').PageData} */
     export let data;
     let flag = false;
+    let checked = false;
 
     async function resetList(event) {
         const data = new FormData(this);
@@ -26,6 +27,11 @@
         }
 
         applyAction(result);
+    }
+
+    function handleCheckBox(event) {
+        checked = !checked;
+        setTimeout(() => (event.target.checked = checked), 0);
     }
 </script>
 
@@ -58,10 +64,23 @@
                 />
             </div>
             <div class="con">
-                <button class="logbutton">Log in</button>
-                <button class="logbutton register" formaction="?/register"
-                    >Register</button
-                >
+                <div class="checkbox">
+                    <label>
+                        First time user?
+                        <input
+                            type="checkbox"
+                            {checked}
+                            on:click|preventDefault={handleCheckBox}
+                        />
+                    </label>
+                </div>
+                {#if !checked}
+                    <button class="logbutton">Log in</button>
+                {:else}
+                    <button class="logbutton register" formaction="?/register"
+                        >Register</button
+                    >
+                {/if}
             </div>
         </form>
     </div>
@@ -101,11 +120,6 @@
         height: 100vh;
     }
 
-    p {
-        margin: 0;
-        padding: 0;
-    }
-
     .fixMiddle {
         position: fixed;
         top: 50%;
@@ -127,15 +141,25 @@
         display: flex;
         justify-content: space-around;
         flex-wrap: wrap;
-        margin: 0 auto;
-        padding: 20px;
+        margin: auto;
+        padding: 10px;
+    }
+
+    .checkbox {
+        width: 200px;
+        height: 50px;
+        text-align: center;
+        margin: 3px;
+        padding-top: 15px;
+        font-size: 14px;
+        font-family: "Courier New", Courier, monospace;
     }
 
     .logbutton {
         display: inline-block;
         color: #252537;
 
-        width: 150px;
+        width: 140px;
         height: 50px;
 
         background: #fff;
