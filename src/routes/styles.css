@@ -10,11 +10,11 @@ body, html{
 
 button {
 	background-color: #f5df4ddd;
-	border: 1px solid rgba(255, 255, 255, 0.407);
-	margin-left: 4px;
-	border-radius: 5px;
-	width: 80px;
-	padding: 10px 10px;
+	border: 1px solid rgba(255, 255, 255, 0.114);
+	margin-left:3px;
+	border-radius: 3px;
+	max-width: 100px;
+	padding: 10px ;
 }
 
 button:hover {

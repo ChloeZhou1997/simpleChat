@@ -6,6 +6,8 @@
     import ChatWindow from "$lib/components/ChatWindow.svelte";
     import MessageBox from "$lib/components/MessageBox.svelte";
 
+    import Submit from "$lib/components/Submit.svelte";
+
     /** @type {import('./$types').PageData} */
     export let data;
     let flag = false;
@@ -93,6 +95,7 @@
             <MessageBox bind:flag bind:messages={data.message} />
             <div class="formFooter">
                 <Logout />
+
                 <form
                     method="POST"
                     on:submit|preventDefault={resetList}
@@ -101,11 +104,7 @@
                 >
                     <button class="clearHistory">clear history</button>
                 </form>
-                {#if !flag}
-                    <button type="submit" form="chatMessage">submit</button>
-                {:else}
-                    <div class="Loading"><p>loading...</p></div>
-                {/if}
+                <Submit {flag} />
             </div>
         </div>
     </section>
@@ -211,12 +210,5 @@
     .clearHistory {
         width: 120px;
         background-color: rgba(255, 255, 251, 0.454);
-    }
-
-    .Loading {
-        text-align: right;
-        width: 80px;
-        padding: 10px 10px;
-        margin-left: 4px;
     }
 </style>

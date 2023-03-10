@@ -39,6 +39,11 @@
         max-width: fit-content;
     }
 
+    .msg p {
+        padding: 0;
+        margin: 0;
+    }
+
     .chatBubbleAssistant {
         background-color: #d4d5d7;
     }
