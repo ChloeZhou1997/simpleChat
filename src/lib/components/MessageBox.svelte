@@ -91,13 +91,13 @@
 <style>
     .textArea {
         font-size: 1rem;
-        line-height: 2rem;
-        min-height: 9.2rem;
-        background-color: white;
-        text-align: left;
-        padding: 0.5rem;
-        resize: none;
+        line-height: 1rem;
+        min-height: 1rem;
         width: 100%;
-        border-radius: 15px;
+        text-align: left;
+        padding: 1rem;
+        resize: none;
+        border: none;
+        outline: none;
     }
 </style>

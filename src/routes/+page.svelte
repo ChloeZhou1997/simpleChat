@@ -95,7 +95,6 @@
             <MessageBox bind:flag bind:messages={data.message} />
             <div class="formFooter">
                 <Logout />
-
                 <form
                     method="POST"
                     on:submit|preventDefault={resetList}
@@ -112,7 +111,6 @@
 
 <style>
     section {
-        max-width: 900px;
         margin: 0 auto;
         display: grid;
         grid-template-rows: 1fr min-content;
@@ -196,10 +194,11 @@
         transition: 0.2s linear;
     }
     .chatBox {
+        width: 90%;
         padding: 1em;
-        background-color: #b2b3b4;
-        border-top-left-radius: 20px;
-        border-top-right-radius: 20px;
+        box-shadow: 3px 3px 3px rgba(141, 141, 141, 0.333);
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .formFooter {

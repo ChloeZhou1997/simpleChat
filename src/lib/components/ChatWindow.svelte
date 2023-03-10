@@ -33,10 +33,11 @@
     .msg {
         font-size: 18px;
         font-family: Helvetica, sans-serif;
-        padding: 1em;
-        margin: 1em;
-        border-radius: 20px;
+        padding: 1rem;
+        margin: 1rem;
+        border-radius: 5px;
         max-width: fit-content;
+        box-shadow: 3px 3px 3px rgba(141, 141, 141, 0.333);
     }
 
     .msg p {
