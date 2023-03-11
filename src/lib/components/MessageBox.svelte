@@ -79,7 +79,7 @@
 >
     <!-- <input name="body" type="text" /> -->
     <textarea
-        placeholder="start your chat here..."
+        placeholder="Start your conversation here..."
         name="body"
         form="chatMessage"
         class="textArea"
@@ -91,13 +91,14 @@
 <style>
     .textArea {
         font-size: 1rem;
-        line-height: 1rem;
-        min-height: 1rem;
+        line-height: 1.5rem;
+        height: 2.5rem;
         width: 100%;
+        padding: 0.5rem;
         text-align: left;
-        padding: 1rem;
         resize: none;
         border: none;
         outline: none;
+        background-color: rgba(207, 205, 205, 0.146);
     }
 </style>

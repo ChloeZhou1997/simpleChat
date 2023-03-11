@@ -1,5 +1,7 @@
 * {
 	box-sizing: border-box;
+	text-decoration: none;
+	list-style: none;
 }
 
 body, html{
@@ -11,14 +13,8 @@ body, html{
 button {
 	background-color: #f5df4ddd;
 	border: 1px solid rgba(255, 255, 255, 0.114);
-	margin-left:3px;
 	border-radius: 3px;
 	max-width: 100px;
 	padding: 10px ;
 }
 
-button:hover {
-    transform: translatey(3px);
-    box-shadow: none;
-	animation: ani9 0.4s ease-in-out infinite alternate;
-  }

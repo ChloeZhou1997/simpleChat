@@ -7,7 +7,7 @@
         width: 8px;
         height: 8px;
         padding: 4px;
-        border: 5px dotted #02020294;
+        border: 5px dotted #39373794;
         border-radius: 50%;
         display: inline-block;
         position: relative;
@@ -26,10 +26,8 @@
 
     .Loading {
         background-color: #f5df4ddd;
-        border: 1px solid rgba(66, 66, 66, 0.114);
         text-align: right;
         padding: 8px;
-        margin-left: 3px;
-        border-radius: 3px;
+        height: 2.5rem;
     }
 </style>

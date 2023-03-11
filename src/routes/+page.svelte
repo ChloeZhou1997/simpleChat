@@ -2,34 +2,14 @@
     // @ts-nocheck
     import { invalidateAll } from "$app/navigation";
     import { applyAction, deserialize, enhance } from "$app/forms";
-    import Logout from "$lib/components/Logout.svelte";
+    import DropDownMenu from "$lib/components/DropDownMenu.svelte";
     import ChatWindow from "$lib/components/ChatWindow.svelte";
     import MessageBox from "$lib/components/MessageBox.svelte";
-
     import Submit from "$lib/components/Submit.svelte";
-
     /** @type {import('./$types').PageData} */
     export let data;
     let flag = false;
     let checked = false;
-
-    async function resetList(event) {
-        const data = new FormData(this);
-        const response = await fetch(this.action, {
-            method: "POST",
-            body: data,
-        });
-
-        /** @type {import('@sveltejs/kit').ActionResult} */
-        const result = deserialize(await response.text());
-
-        if (result.type === "success") {
-            // re-run all `load` functions, following the successful update
-            await invalidateAll();
-        }
-
-        applyAction(result);
-    }
 
     function handleCheckBox(event) {
         checked = !checked;
@@ -92,19 +72,9 @@
     <section>
         <ChatWindow messages={data.message} />
         <div class="chatBox">
+            <DropDownMenu />
             <MessageBox bind:flag bind:messages={data.message} />
-            <div class="formFooter">
-                <Logout />
-                <form
-                    method="POST"
-                    on:submit|preventDefault={resetList}
-                    action="?/resetList"
-                    id="clearHistory"
-                >
-                    <button class="clearHistory">clear history</button>
-                </form>
-                <Submit {flag} />
-            </div>
+            <Submit {flag} />
         </div>
     </section>
 {/if}
@@ -144,7 +114,6 @@
 
     .checkbox {
         width: 200px;
-        height: 50px;
         text-align: center;
         margin: 3px;
         padding-top: 15px;
@@ -194,20 +163,18 @@
         transition: 0.2s linear;
     }
     .chatBox {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
         width: 90%;
         padding: 1em;
         box-shadow: 3px 3px 3px rgba(141, 141, 141, 0.333);
         margin-left: auto;
         margin-right: auto;
+        margin-bottom: 40px;
     }
 
     .formFooter {
         display: flex;
         justify-content: flex-end;
-    }
-
-    .clearHistory {
-        width: 120px;
-        background-color: rgba(255, 255, 251, 0.454);
     }
 </style>

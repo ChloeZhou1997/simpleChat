@@ -18,8 +18,10 @@
                 <p>{post.content}</p>
             </div>
         {:else}
-            <div class="msg chatBubbleUser">
-                <p>{post.content}</p>
+            <div class="messagePadder">
+                <div class="msg chatBubbleUser">
+                    <p>{post.content}</p>
+                </div>
             </div>
         {/if}
     {/each}
@@ -38,11 +40,16 @@
         border-radius: 5px;
         max-width: fit-content;
         box-shadow: 3px 3px 3px rgba(141, 141, 141, 0.333);
+        overflow-wrap: break-word;
     }
 
     .msg p {
         padding: 0;
         margin: 0;
+    }
+
+    .messagePadder {
+        padding-left: 17px;
     }
 
     .chatBubbleAssistant {
@@ -51,7 +58,6 @@
 
     .chatBubbleUser {
         background-color: #f5df4d;
-        text-align: right;
         margin-left: auto;
     }
 </style>

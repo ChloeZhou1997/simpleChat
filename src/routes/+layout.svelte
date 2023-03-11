@@ -1,5 +1,6 @@
 <script>
-  import "./styles.css";
+    import "./styles.css";
+    import "bootstrap-icons/font/bootstrap-icons.css";
 </script>
 
 <slot />
