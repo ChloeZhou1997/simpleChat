@@ -5,10 +5,13 @@
 - [X] prevent empty entry (03/05/2023)
 - [X] prevent multiple forms submissions (03/05/2023)
 # Long-term plan
+- [ ] database normalization
 - [ ] add prompt to do more flexible function
 - [X] add authentication methods to improve security of the site
 
 # Other Log
+## 2023/03/11
+- UI improvements, added dropdown menu;
 ## 2023/03/08
 - Componentalized the code to make it more readable;
 - Improved the login and conversation UI.
