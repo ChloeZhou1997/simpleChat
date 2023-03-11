@@ -26,6 +26,11 @@
 
 <div class="show-more-options">
     {#if showMoreOptions}
+        <div
+            class="blinder"
+            on:click={() => (showMoreOptions = !showMoreOptions)}
+            on:keypress={() => (showMoreOptions = !showMoreOptions)}
+        />
         <div class="options">
             <div class="opt">
                 <form method="POST" action="?/logout" use:enhance>
@@ -80,6 +85,7 @@
         left: -1.5em;
         bottom: 2.8em;
         width: 120px;
+        z-index: 3;
     }
     .ico {
         font-size: 20px;
